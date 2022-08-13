@@ -48,8 +48,8 @@ GPIOA->CRL|=8<<0;
 GPIOA->CRL&=0XFFFFFFF0;GPIOA->CRL|=8<<0;
 ```
 
-**下面是各个IO口输入输出模式的配置：**
-输入模式的配置：<br>
+**下面是各个IO口输入输出模式的配置：**<br>
+_输入模式的配置：_<br>
 PA0为输入(上/下拉)<br>
 ```
 GPIOA->CRL&=0XFFFFFFF0;GPIOA->CRL|=8<<0;
@@ -115,7 +115,7 @@ PA15为输入(上/下拉)<br>
 GPIOA->CRH&=0X0FFFFFFF;GPIOA->CRH|=8<<28;
 ```
 
-同理设置为输出就是<br>
+_同理设置为输出就是:_<br>
 PA0为输出（通用推挽输出50MHZ）<br>
 ```
 GPIOA->CRL&=0XFFFFFFF0;GPIOA->CRL|=3<<0;
@@ -180,6 +180,7 @@ PA15为输出（通用推挽输出50MHZ）<br>
 ```
 GPIOA->CRH&=0X0FFFFFFF;GPIOA->CRH|=3<<28;
 ```
+--------------------------------------------------------------------------------------------
 ```
 GPIOC->CRL&=0XFFFFFFF0;
 ```
