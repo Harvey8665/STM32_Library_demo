@@ -4,9 +4,9 @@
 //              说明: 
 //              ----------------------------------------------------------------
 //              GND   电源地
-//              VCC   接5V或3.3v电源
-//              SCL   接PD6（SCL）
-//              SDA   接PD7（SDA）            
+//              VCC   接5V或3.3v电源（V1.2底板已接好3.3V）
+//              SCL   接PA4（SCL）（V1.2底板已接好）
+//              SDA   接PA5（SDA）（V1.2底板已接好）         
 //              ----------------------------------------------------------------
 //
 //修改说明：修改引脚需要修改本文件的OLED_Init()函数，还有 oled.h 中的第28、29、31、32行
@@ -58,12 +58,12 @@ void OLED_Show(void)
 //		if(ccd_adc[t]<CCD_Yuzhi)
 //			OLED_DrawPoint(t,36);
 //	}
-	OLED_ShowString(0,0,"TIM2-CH1:",16);
+//	OLED_ShowString(0,0,"TIM2-CH1:",16);
 
-	OLED_ShowChinese(0,48,13,16);   // 版
-	OLED_ShowChinese(16,48,14,16);  // 本
-	OLED_ShowChinese(32,48,15,16);  // 号
-	OLED_ShowString(48,48,":V0.0.1",16); //显示字符串
+//	OLED_ShowChinese(0,48,13,16);   // 版
+//	OLED_ShowChinese(16,48,14,16);  // 本
+//	OLED_ShowChinese(32,48,15,16);  // 号
+//	OLED_ShowString(48,48,":V0.0.1",16); //显示字符串
 //	OLED_ShowChinese(0,48,0,16);  // 电
 //	OLED_ShowChinese(16,48,1,16);  // 子
 //	OLED_ShowChinese(32,48,2,16);  // 工
@@ -74,7 +74,7 @@ void OLED_Show(void)
 	// 版本号2
 //	OLED_ShowString(48,32,":remake",16); //显示字符串
   //delay_ms(5);
-	OLED_Refresh();
+//	OLED_Refresh();
 }
 
 //m^n
@@ -873,12 +873,19 @@ void OLED_ShowPicture(unsigned char x0,unsigned char y0,unsigned char x1,unsigne
 void OLED_Init(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	 //使能A端口时钟
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_4;	 
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);	 //使能A端口时钟
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9;	 
  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
- 	GPIO_Init(GPIOA, &GPIO_InitStructure);	  //初始化GPIOD4，5
- 	GPIO_SetBits(GPIOA,GPIO_Pin_5|GPIO_Pin_4);	
+ 	GPIO_Init(GPIOC, &GPIO_InitStructure);	  //初始化GPIOD4，5
+ 	GPIO_SetBits(GPIOC,GPIO_Pin_8|GPIO_Pin_9);	
+//	GPIO_InitTypeDef  GPIO_InitStructure;
+// 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	 //使能A端口时钟
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_4;	 
+// 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//速度50MHz
+// 	GPIO_Init(GPIOA, &GPIO_InitStructure);	  //初始化GPIOD4，5
+// 	GPIO_SetBits(GPIOA,GPIO_Pin_5|GPIO_Pin_4);	
 	
 	delay_ms(200);
 	

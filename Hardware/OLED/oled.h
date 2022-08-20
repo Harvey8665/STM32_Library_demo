@@ -4,9 +4,9 @@
 //              说明: 
 //              ----------------------------------------------------------------
 //              GND   电源地
-//              VCC   接5V或3.3v电源
-//              SCL   接PA4（SCL）
-//              SDA   接PA5（SDA）            
+//              VCC   接5V或3.3v电源（V1.2底板接的是3.3V）
+//              SCL   接PC8（SCL）（V1.2底板已接好）
+//              SDA   接PC9（SDA）（V1.2底板已接好）            
 //              ----------------------------------------------------------------
 //修改说明：修改引脚需要修改本文件的第28、29、31、32行，还有 oled.c 中的 OLED_Init()函数
 //////////////////////////////////////////////////////////////////////////////////
@@ -25,11 +25,17 @@
 #define Y_WIDTH 	64	    						  
 //-----------------OLED IIC端口定义----------------  					   
 
-#define OLED_SCLK_Clr() GPIO_ResetBits(GPIOA,GPIO_Pin_4)//SCL     换引脚需要修改此处
-#define OLED_SCLK_Set() GPIO_SetBits(GPIOA,GPIO_Pin_4)
+#define OLED_SCLK_Clr() GPIO_ResetBits(GPIOC,GPIO_Pin_8)//SCL     换引脚需要修改此处
+#define OLED_SCLK_Set() GPIO_SetBits(GPIOC,GPIO_Pin_8)
 
-#define OLED_SDIN_Clr() GPIO_ResetBits(GPIOA,GPIO_Pin_5)//SDA     换引脚需要修改此处
-#define OLED_SDIN_Set() GPIO_SetBits(GPIOA,GPIO_Pin_5)
+#define OLED_SDIN_Clr() GPIO_ResetBits(GPIOC,GPIO_Pin_9)//SDA     换引脚需要修改此处
+#define OLED_SDIN_Set() GPIO_SetBits(GPIOC,GPIO_Pin_9)
+
+//#define OLED_SCLK_Clr() GPIO_ResetBits(GPIOA,GPIO_Pin_4)//SCL     换引脚需要修改此处
+//#define OLED_SCLK_Set() GPIO_SetBits(GPIOA,GPIO_Pin_4)
+
+//#define OLED_SDIN_Clr() GPIO_ResetBits(GPIOA,GPIO_Pin_5)//SDA     换引脚需要修改此处
+//#define OLED_SDIN_Set() GPIO_SetBits(GPIOA,GPIO_Pin_5)
 
  		     
 #define OLED_CMD  0	//写命令

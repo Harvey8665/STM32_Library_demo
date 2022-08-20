@@ -8,8 +8,8 @@
          5V  —— VDD
          GND   —— GND
          PA1   —— AO1
-         PA2   —— CLK
-         PA7   —— SI
+         PA2   —— CLK    如需修改本引脚，则在下方修改Ccd_Init函数，再到 ccd.h 里修改 TSL_CLK 的定义即可
+         PA7   —— SI     如需修改本引脚，则在下方修改Ccd_Init函数，再到 ccd.h 里修改 TSL_SI 的定义即可
 */
 #define dynamic_threshold 1    // 此处设置是否启用动态阈值算法，值为1时启用
 
@@ -25,12 +25,14 @@ void Ccd_Init(void)
  	
  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	 //使能PA端口时钟
 	
+ // 声明CLK的引脚，注意，该引脚在RD_TSL疑似手动模拟PWM 2022-8-13
  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;				 //PA.2 端口配置
  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //IO口速度为50MHz
  GPIO_Init(GPIOA, &GPIO_InitStructure);					 //根据设定参数初始化GPIOA.2
  GPIO_SetBits(GPIOA,GPIO_Pin_2);						 //PA.2 输出高
 
+ // 声明SI的引脚，可以在此修改引脚的配置
  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;	    		 //PA.7 端口配置, 推挽输出
  GPIO_Init(GPIOA, &GPIO_InitStructure);	  				 //推挽输出 ，IO口速度为50MHz
  GPIO_SetBits(GPIOA,GPIO_Pin_7); 						 //PA.7	输出高
@@ -75,7 +77,7 @@ void Dly_us(int a)
 		u8 i=0,tslp=0;
 		TSL_CLK=1;     //CLK引脚设为高电平          
 		TSL_SI=0; 
-		Dly_us(TIME_us);
+		Dly_us(TIME_us);   //延时曝光时间
 				
 		TSL_SI=1; 
 		TSL_CLK=0;

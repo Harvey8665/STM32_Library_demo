@@ -26,13 +26,21 @@ void TIM2_PWM_Init(u16 arr,u16 psc)
 	TIM_OCInitTypeDef  TIM_OCInitStructure;
 	
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);	//使能定时器3时钟
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);  //使能GPIO外设；————假如要AFIO复用功能模块时钟则要加上（  | RCC_APB2Periph_AFIO）
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3; //TIM2默认复用的引脚
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB, ENABLE);  //使能GPIO外设；————假如要AFIO复用功能模块时钟则要加上（  | RCC_APB2Periph_AFIO）
+	// PWMA
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15; //TIM2_CH1重映射引脚
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  //复用推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIO
+	GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA15
+	// PWMB
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3; //TIM2_CH2重映射引脚
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  //复用推挽输出
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIOB3
  
+	GPIO_PinRemapConfig(GPIO_FullRemap_TIM2, ENABLE);
+  GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE); //禁止JTAG功能，把PB3，PB4作为普通IO口使用
+
    //初始化TIM2
 	TIM_TimeBaseStructure.TIM_Period = arr; //设置在下一个更新事件装入活动的自动重装载寄存器周期的值
 	TIM_TimeBaseStructure.TIM_Prescaler = psc; //设置用来作为TIMx时钟频率除数的预分频值 
@@ -46,14 +54,10 @@ void TIM2_PWM_Init(u16 arr,u16 psc)
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; //输出极性:TIM输出比较极性高
 	
 	TIM_OC1Init(TIM2, &TIM_OCInitStructure);  //根据T指定的参数初始化外设TIM2 OC1
-  TIM_OC2Init(TIM2, &TIM_OCInitStructure);  //根据T指定的参数初始化外设TIM3 OC2
-	//TIM_OC3Init(TIM2, &TIM_OCInitStructure);  //根据T指定的参数初始化外设TIM3 OC3
-	TIM_OC4Init(TIM2, &TIM_OCInitStructure);  //根据T指定的参数初始化外设TIM3 OC4
+  TIM_OC2Init(TIM2, &TIM_OCInitStructure);  //根据T指定的参数初始化外设TIM2 OC2
 	
 	TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Enable);  //使能TIM2在CCR1上的预装载寄存器
   TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
-	//TIM_OC3PreloadConfig(TIM2, TIM_OCPreload_Enable);
-	TIM_OC4PreloadConfig(TIM2, TIM_OCPreload_Enable);
 	
 	TIM_Cmd(TIM2, ENABLE);  //使能TIM2
 }
@@ -171,7 +175,11 @@ void TIM4_PWM_Init(u16 arr,u16 psc)
 
 
 
-
+////////////////////////////////////////////////////////
+//
+// 以下为高级定时器的初始化函数
+//
+////////////////////////////////////////////////////////
 
 
 

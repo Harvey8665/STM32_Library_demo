@@ -1,0 +1,19 @@
+
+	本文档在编译时自动忽略
+	
+	Hardware文件夹结构说明：
+	TSL1401模块： ccd.c
+				  adc.c
+	0.96英寸OLED模块：oled.c
+	TB6612模块：Tim.c
+				Motor.c
+	
+	
+	
+
+
+
+
+
+
+
